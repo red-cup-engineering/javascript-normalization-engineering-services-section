@@ -1,0 +1,36 @@
+[submodule "jsnode-package-body-normalization-app"]
+	path = apps/jsnode-package-body-normalization-app
+	url = https://github.com/red-cup-engineering/jsnode-package-body-normalization-app.git
+	branch = main
+[submodule "javascript-deduplication-services-section"]
+	path = services/javascript-deduplication-services-section
+	url = https://github.com/red-cup-engineering/javascript-deduplication-services-section.git
+	branch = main
+[submodule "jsnode-package-owner-projection-service"]
+	path = services/jsnode-package-owner-projection-service
+	url = https://github.com/red-cup-engineering/jsnode-package-owner-projection-service.git
+	branch = main
+[submodule "jsnode-package-identity-reference-normalization-service"]
+	path = services/jsnode-package-identity-reference-normalization-service
+	url = https://github.com/red-cup-engineering/jsnode-package-identity-reference-normalization-service.git
+	branch = main
+[submodule "jsnode-package-identity-normalization-service"]
+	path = services/jsnode-package-identity-normalization-service
+	url = https://github.com/red-cup-engineering/jsnode-package-identity-normalization-service.git
+	branch = main
+[submodule "jsnode-package-dependency-normalization-service"]
+	path = services/jsnode-package-dependency-normalization-service
+	url = https://github.com/red-cup-engineering/jsnode-package-dependency-normalization-service.git
+	branch = main
+[submodule "jsnode-package-check-service"]
+	path = services/jsnode-package-check-service
+	url = https://github.com/red-cup-engineering/jsnode-package-check-service.git
+	branch = main
+[submodule "jsnode-package-body-observation-service"]
+	path = services/jsnode-package-body-observation-service
+	url = https://github.com/red-cup-engineering/jsnode-package-body-observation-service.git
+	branch = main
+[submodule "jsnode-cross-package-module-edge-normalization-service"]
+	path = services/jsnode-cross-package-module-edge-normalization-service
+	url = https://github.com/red-cup-engineering/jsnode-cross-package-module-edge-normalization-service.git
+	branch = main
