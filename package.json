@@ -29,5 +29,10 @@
     "data",
     "README.md",
     "package.json"
-  ]
+  ],
+  "license": "MIT",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
+  }
 }
