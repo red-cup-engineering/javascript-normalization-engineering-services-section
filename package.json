@@ -1,11 +1,11 @@
 {
-  "name": "@red-cup-engineering/javascript-normalization-services-section",
+  "name": "@red-cup-engineering/javascript-normalization-engineering-services-section",
   "version": "0.1.1",
   "type": "module",
   "description": "Groups services that normalize JavaScript packages and code toward standard forms.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/red-cup-engineering/javascript-normalization-services-section.git"
+    "url": "git+https://github.com/red-cup-engineering/javascript-normalization-engineering-services-section.git"
   },
   "exports": {
     "./review-jsnode-package": "./scripts/review-jsnode-package.mjs"
