@@ -4,7 +4,7 @@
 	branch = main
 [submodule "javascript-deduplication-services-section"]
 	path = services/javascript-deduplication-services-section
-	url = https://github.com/red-cup-engineering/javascript-deduplication-services-section.git
+	url = https://github.com/red-cup-engineering/javascript-deduplication-engineering-services-section.git
 	branch = main
 [submodule "jsnode-package-owner-projection-service"]
 	path = services/jsnode-package-owner-projection-service
