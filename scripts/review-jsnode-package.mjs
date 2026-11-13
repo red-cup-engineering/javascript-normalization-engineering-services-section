@@ -3,12 +3,12 @@ import { existsSync, lstatSync, readdirSync, readFileSync, realpathSync } from "
 import { basename, dirname, extname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
-import { canonical, parse } from "@red-cup-engineering/json-services-section";
+import { canonical, parse } from "@red-cup-engineering/json-engineering-services-section";
 import { normalizeJsnodePackageManifest } from "@red-cup-engineering/npm-package-manifest-normalization-service";
-import { readJavascriptFileImports } from "@red-cup-engineering/javascript-file-import-services-section/read-javascript-file-imports";
-import { SPECIFIER } from "@red-cup-engineering/javascript-node-services-section/audit-layer-imports";
-import { argument } from "@red-cup-engineering/javascript-node-services-section/argv";
-import { discoverHousePackages } from "@red-cup-engineering/javascript-node-services-section/discover-house-packages";
+import { readJavascriptFileImports } from "@red-cup-engineering/javascript-file-import-engineering-services-section/read-javascript-file-imports";
+import { SPECIFIER } from "@red-cup-engineering/javascript-node-engineering-services-section/audit-layer-imports";
+import { argument } from "@red-cup-engineering/javascript-node-engineering-services-section/argv";
+import { discoverHousePackages } from "@red-cup-engineering/javascript-node-engineering-services-section/discover-house-packages";
 
 const TEST_FILE = /\.test\.(mjs|mts|js|ts|cjs)$/u;
 const EXTERNAL_TEST_RUNNER = /^(?:npx\s+)?(?:vitest|jest|mocha|tap|ava|playwright)(?:\s|$)/u;
