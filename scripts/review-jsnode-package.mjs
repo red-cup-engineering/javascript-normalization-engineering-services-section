@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { existsSync, lstatSync, readdirSync, readFileSync, realpathSync } from "node:fs";
 import { basename, dirname, extname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -309,7 +310,7 @@ function sourceWorkspaceReview(packageDirectory, artifact, suppliedManifest) {
   const evidenceBinding = { kind: "source-workspace", sourceVerified: false, nativeRecordBound: false, executionVerified: false, provenanceVerified: false };
   try {
     if (typeof packageDirectory !== "string") throw new TypeError("source review requires its actual selected package directory");
-    const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+    
     const hash = (value) => typeof value === "string" && /^[a-f0-9]{64}$/u.test(value);
     const oid = (value) => typeof value === "string" && /^[a-f0-9]{40}$/u.test(value);
     const path = (value, dot = false) => typeof value === "string" && (dot && value === "." || value && !isAbsolute(value) && !value.includes("\\") && !value.includes("\0") && value.split("/").every(part => part && part !== "." && part !== ".."));
@@ -328,7 +329,7 @@ function sourceWorkspaceReview(packageDirectory, artifact, suppliedManifest) {
       const file = inside ? absolute(record.path) : record.path;
       if (!isAbsolute(file) || resolve(file) !== file) throw new TypeError("evidence carrier must name its canonical file");
       const bytes = regular(file);
-      if (digest(bytes) !== record.sha256) throw new Error("evidence carrier hash differs: " + file);
+      if (sha256Hex(bytes) !== record.sha256) throw new Error("evidence carrier hash differs: " + file);
       return bytes;
     };
     const inventory = parse(carrier(artifact.inventory).toString("utf8"));
@@ -370,7 +371,7 @@ function sourceWorkspaceReview(packageDirectory, artifact, suppliedManifest) {
       const bytes = regular(file);
       const blob = createHash("sha1").update(Buffer.from("blob " + bytes.length + "\0")).update(bytes).digest("hex");
       const mode = lstatSync(file).mode & 0o111 ? "100755" : "100644";
-      if (digest(bytes) !== row.sha256 || blob !== row.gitBlob || mode !== row.mode) throw new Error("selected authored source changed: " + row.workspacePath);
+      if (sha256Hex(bytes) !== row.sha256 || blob !== row.gitBlob || mode !== row.mode) throw new Error("selected authored source changed: " + row.workspacePath);
       files.set(row.workspacePath, row);
     }
     for (const row of packages.values()) {
