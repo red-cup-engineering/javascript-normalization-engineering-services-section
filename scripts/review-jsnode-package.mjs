@@ -12,7 +12,7 @@ import { discoverHousePackages } from "@red-cup-engineering/discover-house-packa
 const TEST_FILE = /\.test\.(mjs|mts|js|ts|cjs)$/u;
 const EXTERNAL_TEST_RUNNER = /^(?:npx\s+)?(?:vitest|jest|mocha|tap|ava|playwright)(?:\s|$)/u;
 const VERIFICATION_SCRIPT_NAMES = new Set(["verify", "attest", "prove", "audit"]);
-const STORAGE_SCOPES = new Map([
+const CUSTODY_SCOPES = new Map([
   ["engineering-services-section", "@red-cup-engineering"],
   ["science-services-section", "@lenticule-science"],
   ["operations-services-section", "@coesite-operations"],
@@ -72,7 +72,7 @@ function isStandardTestScript(command) {
 export function expectedPackageScope(packageDirectory) {
   const segments = pathSegments(packageDirectory);
   for (let index = segments.length - 1; index >= 0; index -= 1) {
-    const expectedScope = STORAGE_SCOPES.get(segments[index]);
+    const expectedScope = CUSTODY_SCOPES.get(segments[index]);
     if (expectedScope !== undefined) return expectedScope;
   }
   return undefined;
@@ -305,7 +305,7 @@ export function reviewJsnodePackage({ manifest, files = [], packageDirectory, ar
 // This is evidence binding, not a package resolver or an installer. The caller
 // separately admits the recorded native command results. Default review is pure.
 function sourceWorkspaceReview(packageDirectory, artifact, suppliedManifest) {
-  const validated = new Set();
+  const admitted = new Set();
   const evidenceBinding = { kind: "source-workspace", sourceVerified: false, nativeRecordBound: false, executionVerified: false, provenanceVerified: false };
   try {
     if (typeof packageDirectory !== "string") throw new TypeError("source review requires its actual selected package directory");
@@ -410,7 +410,7 @@ function sourceWorkspaceReview(packageDirectory, artifact, suppliedManifest) {
           const target = resolve(absolute(row.workspacePath), specifier.slice(specifier.indexOf(":") + 1));
           if (!pathIsInside(root, target) || target !== absolute(provider.workspacePath) || realpathSync(target) !== target || !lstatSync(target).isDirectory()) throw new Error("local dependency is not the selected contained directory: " + name);
         } else if (!isExactVersion(specifier) || specifier !== provider.version) throw new Error("source dependency form/version is unsupported or unreceived: " + name + " " + specifier);
-        if (row.name === selected.name) validated.add(field + "." + name);
+        if (row.name === selected.name) admitted.add(field + "." + name);
       }
     }
     evidenceBinding.sourceVerified = true; // Native-record association remains a distinct fact.
@@ -433,7 +433,7 @@ function sourceWorkspaceReview(packageDirectory, artifact, suppliedManifest) {
     };
     if (!native.tools || !isExactVersion(native.tools.node) || !isExactVersion(native.tools.pnpm) || !native.provenance || ["kind", "recordedBy", "observedAt"].some(key => typeof native.provenance[key] !== "string" || !native.provenance[key])) throw new Error("native receiving record needs Node/PNPM versions and recorded provenance");
     if (native.sourceInventorySha256 !== artifact.inventory.sha256 || native.workspaceConfigurationSha256 !== artifact.configuration.sha256 || native.lockSha256 !== artifact.lockfile.sha256 || !Array.isArray(native.commands) || !native.commands.some(frozenPnpmInstall)) throw new Error("native receiving record does not bind this source/configuration/lock and frozen command result");
-    return { admitted: validated, lockPath: absolute(artifact.lockfile.path), deviations: [], evidenceBinding: { ...evidenceBinding, sourceVerified: true, nativeRecordBound: true, inventorySha256: artifact.inventory.sha256, lockSha256: artifact.lockfile.sha256, nativeReceivingSha256: artifact.nativeReceiving.sha256, provenance: native.provenance } };
+    return { admitted, lockPath: absolute(artifact.lockfile.path), deviations: [], evidenceBinding: { ...evidenceBinding, sourceVerified: true, nativeRecordBound: true, inventorySha256: artifact.inventory.sha256, lockSha256: artifact.lockfile.sha256, nativeReceivingSha256: artifact.nativeReceiving.sha256, provenance: native.provenance } };
   } catch (error) {
     return { admitted: new Set(), deviations: [{ code: "source-workspace-unreceived", detail: error instanceof Error ? error.message : String(error) }], evidenceBinding };
   }
