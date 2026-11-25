@@ -11,6 +11,7 @@
     "./review-jsnode-package": "./scripts/review-jsnode-package.mjs"
   },
   "dependencies": {
+    "@red-cup-engineering/cryptographic-computer-data-engineering-services-section": "0.3.8-dev.0",
     "@red-cup-engineering/discover-house-packages-service": "^0.1.0",
     "@red-cup-engineering/javascript-file-import-engineering-services-section": "^0.2.0",
     "@red-cup-engineering/javascript-node-engineering-services-section": "^0.4.3",

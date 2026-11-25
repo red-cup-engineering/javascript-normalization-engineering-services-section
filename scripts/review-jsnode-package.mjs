@@ -1,9 +1,9 @@
 #!/usr/bin/env node
+import { protocolDigestHex } from "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/hash";
 import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { existsSync, lstatSync, readdirSync, readFileSync, realpathSync } from "node:fs";
 import { basename, dirname, extname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createHash } from "node:crypto";
 import { canonical, parse } from "@red-cup-engineering/json-engine";
 import { normalizeJsnodePackageManifest } from "@red-cup-engineering/npm-package-manifest-normalization-service";
 import { readJavascriptFileImports } from "@red-cup-engineering/javascript-file-import-engineering-services-section/read-javascript-file-imports";
@@ -369,7 +369,7 @@ function sourceWorkspaceReview(packageDirectory, artifact, suppliedManifest) {
       const file = absolute(row.workspacePath);
       if (resolve(source.directory, row.path) !== file || [...generated].some(item => pathIsInside(absolute(item), file))) throw new Error("authored source overlaps a generated exclusion or differs from its repository path");
       const bytes = regular(file);
-      const blob = createHash("sha1").update(Buffer.from("blob " + bytes.length + "\0")).update(bytes).digest("hex");
+      const blob = protocolDigestHex("sha1", Buffer.from("blob " + bytes.length + "\0"), bytes);
       const mode = lstatSync(file).mode & 0o111 ? "100755" : "100644";
       if (sha256Hex(bytes) !== row.sha256 || blob !== row.gitBlob || mode !== row.mode) throw new Error("selected authored source changed: " + row.workspacePath);
       files.set(row.workspacePath, row);
